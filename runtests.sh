@@ -1,7 +1,7 @@
 #!/bin/bash
 # vim: et ts=4 sw=4 sta ai
 
-PATTERN='.'
+PATTERN="$2"
 
 WHICH=""
 if [ -n "$1" ]

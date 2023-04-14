@@ -77,8 +77,8 @@ class Response:
         if request.method == 'LS':
             # utriedit!
             try:
-                self_filenames=self.content.decode('utf-8').splitlines().sort()
-                other_filenames=other.content.decode('utf-8').splitlines().sort()
+                self_filenames=sorted(self.content.decode('utf-8').splitlines())
+                other_filenames=sorted(other.content.decode('utf-8').splitlines())
                 return self_filenames==other_filenames
             except UnicodeDecodeError:
                 return False
