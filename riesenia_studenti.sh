@@ -14,7 +14,7 @@ cat ../riesenia/repos |
             continue
         fi
         RIESENIE='../riesenia/'"$SRC"
-        NAME=`echo $RIESENIE | cut -f4 -d/`
+        NAME=`echo $RIESENIE | cut -f3 -d/`
         echo "$RIESENIE:$NAME"
         )
     done
