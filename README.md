@@ -6,6 +6,7 @@
    inak, možno `python3-yaml` alebo tak nejako.
 2. Takisto je treba nainštalovať pythonovskú knižnicu `pygments`.
 3. Musíte mať nainštalovanú aj knižnicu `ncurses`, ale tú takmer iste nainštalovanú máte.
+4. Potrebujete nainštalovať aj príkaz `rkill`, ktorý je pravdepodobne v balíčku `pslist`
 
 ## Ako testovať hromadne všetky testy
 
