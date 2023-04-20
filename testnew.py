@@ -6,7 +6,7 @@ import socket
 import glob
 import time
 
-TIMEOUT=1
+TIMEOUT=0.25
 
 class TimeOutException(Exception):
    pass
@@ -176,7 +176,8 @@ class ResponseFromSocket(Response):
         else:
             self.content=b''
 
-signal.alarm(TIMEOUT)
+signal.setitimer(signal.ITIMER_REAL,TIMEOUT)
+#signal.alarm(TIMEOUT)
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.connect(('localhost',9999))
 f=s.makefile(mode='rwb')
@@ -201,7 +202,8 @@ for req_resp_fnm in sorted(glob.glob('req_resp*.yaml')):
         print_and_flush(f'---')
         print_and_flush(f'>>> End request, awaiting response')
         # precitame response
-        signal.alarm(TIMEOUT)
+        signal.setitimer(signal.ITIMER_REAL,TIMEOUT)
+        # signal.alarm(TIMEOUT)
         try:
             response_real=ResponseFromSocket(f,request)
         except TimeOutException:
