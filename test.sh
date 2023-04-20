@@ -5,7 +5,7 @@ then
 	source test_prepare.sh
 fi
 echo '>>> Starting server'
-python3 "$1"  >/dev/null& 
+python3 "$1"  >"$2" & 
 PIDRIESENIE=$!
 sleep 0.2
 echo '>>> Running test.py'

@@ -1,6 +1,15 @@
 #!/bin/bash
 # vim: et ts=4 sw=4 sta ai
 
+
+MAKEOUT2="n"
+
+if [ "$1" = '-a' ]; then
+    MAKEOUT2="y"
+    shift
+fi
+
+
 PATTERN="$2"
 
 WHICH=""
@@ -54,12 +63,13 @@ while IFS=: read RIESENIE NAME ; do
     fi
     ERR=results/test_${NAME}.err
     OUT=results/test_${NAME}.txt 
+    OUT2=results/test_${NAME}.serverout.txt 
     printf '%-20s' "${NAME}" > /dev/stderr
     echo '<tr>'
     echo '<th> <a href="source/'${NAME}'.html">'${NAME}'</a></th>'
     for TEST in $TESTS; do
         cd $TEST
-        bash test.sh ../$RIESENIE 2>${ERR} >${OUT}
+        bash test.sh ../$RIESENIE ${OUT2} 2>${ERR} >${OUT}
         EXIT_STATUS=$?
         echo '<td>'
         if [ "$EXIT_STATUS" == "0" ]
@@ -75,6 +85,9 @@ while IFS=: read RIESENIE NAME ; do
         printf "${COLOR}%s$(tput sgr0)" ${MARK} >/dev/stderr
         echo '<span class="'$CLASS'">'$MARK'</span>'
         echo '<a href="'$TEST/${OUT}'">&gt;&gt;</a>'
+        if [ "$MAKEOUT2" == "y" ]; then
+            echo '<a href="'$TEST/${OUT2}'">stdout&gt;&gt;</a>'
+        fi
         if [ ! -s ${ERR} ]; then
             printf '_' > /dev/stderr
 	    	rm ${ERR}
