@@ -1,4 +1,4 @@
-# Testovanie servera
+# Testovanie mboxer servera
 
 ## Čo urobiť pred testovaním
 
