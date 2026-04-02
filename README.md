@@ -1,4 +1,4 @@
-# Testovanie reader servera
+# Testovanie servera
 
 ## Čo urobiť pred testovaním
 
