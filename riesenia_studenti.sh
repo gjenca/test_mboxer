@@ -2,7 +2,7 @@
 # vim: et ts=4 sw=4 sta ai
 # Toto je pre vyucujuceho, hlada to vsetky studentske riesenia
 # studentom to nebude fungovat a tak to ma byt.
-cat ../riesenia/repos |
+cat ../riesenia/repos | grep -v '^#' |
     while read USER_REPO;
     do
         (cd ../riesenia/

@@ -19,6 +19,7 @@ then
 fi
 
 ./getsource.sh "$WHICH"
+TESTROOT="$PWD"
 (
 cat << THEEND
 <!DOCTYPE html>
@@ -68,9 +69,13 @@ while IFS=: read RIESENIE NAME ; do
     echo '<tr>'
     echo '<th> <a href="source/'${NAME}'.html">'${NAME}'</a></th>'
     for TEST in $TESTS; do
-        cd $TEST
-        bash test.sh ../$RIESENIE ${OUT2} 2>${ERR} >${OUT}
+        WORK=$(mktemp -d)
+        cp -aL "$TEST"/. "$WORK"/
+        mkdir -p "$WORK/results"
+        ( cd "$WORK" && bash test.sh "$TESTROOT/$RIESENIE" "${OUT2}" 2>"${ERR}" >"${OUT}" )
         EXIT_STATUS=$?
+        cp -a "$WORK/results/." "$TEST/results/" 2>/dev/null
+        rm -rf "$WORK"
         echo '<td>'
         if [ "$EXIT_STATUS" == "0" ]
         then
@@ -88,15 +93,14 @@ while IFS=: read RIESENIE NAME ; do
         if [ "$MAKEOUT2" == "y" ]; then
             echo '<a href="'$TEST/${OUT2}'">stdout&gt;&gt;</a>'
         fi
-        if [ ! -s ${ERR} ]; then
+        if [ ! -s "$TEST/${ERR}" ]; then
             printf '_' > /dev/stderr
-	    	rm ${ERR}
+	    	rm "$TEST/${ERR}"
         else
             printf '!' >/dev/stderr
             echo '<a href="'$TEST/${ERR}'">err&gt;&gt;</a>'
 	    fi
         echo '</td>'
-        cd ..
         #killall python 2>/dev/null
         #killall python3 2>/dev/null
     done

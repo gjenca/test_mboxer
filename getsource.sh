@@ -9,7 +9,7 @@ then
 fi
 echo '>>> Converting source code'
 mkdir -p source
-./riesenia"$WHICH".sh $@ |
+./riesenia"$WHICH".sh $@ | grep -v '^#' | 
 while IFS=: read RIESENIE NAME ; do
     if [ "$NAME" == "" ]
     then
