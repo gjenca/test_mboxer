@@ -2,7 +2,7 @@
 method: WRITE
 headers:
  Mailbox: "yyy"
- Content-length: "20"
+ Content-length: "21"
 content: "0123456789\n987634321\n"
 ---
 status: 203

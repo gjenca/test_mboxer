@@ -1,0 +1,11 @@
+---
+method: SEARCH
+headers:
+  Mailbox: xxx
+  Content-length: 8
+content: "kapybara"
+---
+status: 100
+headers:
+  Number-of-messages: "2"
+content: "s_kapybarou\ns_kapybarou2\n"

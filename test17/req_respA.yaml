@@ -1,0 +1,10 @@
+---
+method: DELETE
+headers:
+  Mailbox: xxx
+  Message: delete_this
+content: ""
+---
+status: 100
+headers: {}
+content: ""

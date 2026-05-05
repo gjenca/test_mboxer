@@ -74,7 +74,7 @@ class Response:
         if self.status!=other.status or \
             self.headers!=other.headers:
                 return False
-        if request.method == 'LS':
+        if request.method in ('LS','SEARCH'):
             # utriedit!
             try:
                 self_filenames=sorted(self.content.decode('utf-8').splitlines())
