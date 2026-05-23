@@ -99,7 +99,9 @@ class ResponseFromDict(Response):
         if type(d['status'])!=int:
             raise ValueError('non-numeric status in response')
         self.status=d['status']
-        self.headers=d['headers']
+        self.headers={}
+        for key,value in d['headers'].items():
+            self.headers[key.lower()]=value
         self.content=d['content']
         if type(self.content) is str:
             self.content=self.content.encode('utf-8')
@@ -145,7 +147,7 @@ class ResponseFromSocket(Response):
                 name,value=line_out.split(':',1)
                 # medzery zlava budem tolerovat
                 value=value.lstrip()
-                self.headers[name]=value
+                self.headers[name.lower()]=value
             # prazdny riadok -> koniec hlaviciek
             elif not line_out:
                 print_and_flush('S->C: end of headers')
@@ -156,16 +158,16 @@ class ResponseFromSocket(Response):
                 print_and_flush('>>> Exitting test')
                 sys.exit(1)
         # citanie obsahu -- berie do uvahy hodnotu hlaviciek
-        if 'Content-length' in self.headers:
-            cl=int(self.headers['Content-length'])
+        if 'content-length' in self.headers:
+            cl=int(self.headers['content-length'])
             try:
                 self.content=f.read(cl)
             except TimeOutException:
                 handle_timeout('reading content')
             print_and_flush(f'S->C content: {repr(self.content)}')
-        elif 'Number-of-messages' in self.headers:
+        elif 'number-of-messages' in self.headers:
             self.content=b''
-            n=int(self.headers['Number-of-messages'])
+            n=int(self.headers['number-of-messages'])
             for i in range(n):
                 try:
                     mbox=f.readline()
